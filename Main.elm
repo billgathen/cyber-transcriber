@@ -7,7 +7,7 @@ import Music
 
 type alias Model = List String
 
-type Action = NoOp | Play | Silence
+type Action = NoOp | Play | Thump String | Silence
 
 inbox : Signal.Mailbox Action
 inbox =
@@ -28,6 +28,8 @@ update action model =
       -> model
     Play
       -> Music.aMajorChord
+    Thump note
+      -> [ note ]
     Silence
       -> Music.silence
 
@@ -35,6 +37,7 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   div [ ]
   [
+    noteList address Music.bassNotes,
     button [
       onClick address Play
       ] [ text "Play" ],
@@ -42,6 +45,16 @@ view address model =
       onClick address Silence
       ] [ text "Silence" ]
     ]
+
+noteList : Signal.Address Action -> List String -> Html
+noteList address notes =
+  div [ ] (List.map (asNoteElement address) notes)
+
+asNoteElement : Signal.Address Action -> String -> Html
+asNoteElement address note =
+  button [
+    onClick address (Thump note)
+    ] [ text note ]
 
 -- Send to JavaScript
 port notesPlaying : Signal Model
