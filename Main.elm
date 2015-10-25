@@ -3,11 +3,9 @@ module Main where
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Music
 
 type alias Model = List String
-
-aMajor  = [ "A4", "C#4", "E4" ]
-noChord = [ ]
 
 type Action = NoOp | Play | Silence
 
@@ -21,17 +19,17 @@ actions =
 
 model : Signal Model
 model =
-  Signal.foldp update noChord actions
+  Signal.foldp update Music.silence actions
 
 update : Action -> Model -> Model
-update action model=
+update action model =
   case action of
     NoOp
       -> model
     Play
-      -> aMajor
+      -> Music.aMajorChord
     Silence
-      -> noChord
+      -> Music.silence
 
 view : Signal.Address Action -> Model -> Html
 view address model =
