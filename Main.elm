@@ -63,9 +63,13 @@ port notesPlaying : Signal Model
 port notesPlaying =
   model
 
-port keysPressed : Signal (List Int)
+port keysPressed : Signal (List String)
 port keysPressed =
-  Signal.map Set.toList Keyboard.keysDown
+  Signal.map keysAsNotes (Signal.map Set.toList Keyboard.keysDown)
+
+keysAsNotes : List Int -> List String
+keysAsNotes charCodes =
+  List.map toString charCodes
 
 main : Signal Html
 main =
