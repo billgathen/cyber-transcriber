@@ -80,7 +80,7 @@ port notesPlaying =
 
 port notesPressed : Signal (List String)
 port notesPressed =
-  model
+  notes
 
 -- MAIN
 

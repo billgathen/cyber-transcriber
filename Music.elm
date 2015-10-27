@@ -1,6 +1,6 @@
 module Music where
 
-bassNotes = [ "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3" ]
+bassNotes = [ "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A3", "A#3", "B3", "C3" ]
 
 cMajorChord =      [ "C4",  "E4",  "G4"  ]
 cSharpMajorChord = [ "C#4", "F4",  "G#4" ]
@@ -26,19 +26,19 @@ keysAsNotes keys =
 keyAsNote : Int -> List String
 keyAsNote key =
   case key of
-    192 -> [ "C2"  ]
-    49  -> [ "C#2" ]
-    50  -> [ "D2"  ]
-    51  -> [ "D#2" ]
-    52  -> [ "E2"  ]
-    53  -> [ "F2"  ]
-    54  -> [ "F#2" ]
-    55  -> [ "G2"  ]
-    56  -> [ "G#2" ]
-    57  -> [ "A2"  ]
-    48  -> [ "A#2" ]
-    189 -> [ "B2"  ]
-    187 -> [ "C3"  ]
+    192 -> [ "C3"  ]
+    49  -> [ "C#3" ]
+    50  -> [ "D3"  ]
+    51  -> [ "D#3" ]
+    52  -> [ "E3"  ]
+    53  -> [ "F3"  ]
+    54  -> [ "F#3" ]
+    55  -> [ "G3"  ]
+    56  -> [ "G#3" ]
+    57  -> [ "A3"  ]
+    48  -> [ "A#3" ]
+    189 -> [ "B3"  ]
+    187 -> [ "C4"  ]
     81  -> cMajorChord
     87  -> cSharpMajorChord
     69  -> dMajorChord
