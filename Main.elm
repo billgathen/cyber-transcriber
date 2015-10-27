@@ -3,6 +3,8 @@ module Main where
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Keyboard
+import Set
 import Music
 
 type alias Model = List String
@@ -60,6 +62,10 @@ asNoteElement address note =
 port notesPlaying : Signal Model
 port notesPlaying =
   model
+
+port keysPressed : Signal (List Int)
+port keysPressed =
+  Signal.map Set.toList Keyboard.keysDown
 
 main : Signal Html
 main =
