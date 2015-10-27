@@ -7,6 +7,8 @@ import Keyboard
 import Set
 import Music
 
+-- MODEL
+
 type alias Model = List String
 
 type Action = NoOp | Play | Thump String | Silence
@@ -23,6 +25,16 @@ model : Signal Model
 model =
   Signal.foldp update Music.silence actions
 
+keysAsNotes : List Int -> List String
+keysAsNotes charCodes =
+  List.map toString charCodes
+
+notes : Signal (List String)
+notes =
+  Signal.map Music.keysAsNotes (Signal.map Set.toList Keyboard.keysDown)
+
+-- UPDATE
+
 update : Action -> Model -> Model
 update action model =
   case action of
@@ -34,6 +46,8 @@ update action model =
       -> [ note ]
     Silence
       -> Music.silence
+
+-- UPDATE
 
 view : Signal.Address Action -> Model -> Html
 view address model =
@@ -58,18 +72,17 @@ asNoteElement address note =
     onClick address (Thump note)
     ] [ text note ]
 
--- Send to JavaScript
+-- PORTS
+
 port notesPlaying : Signal Model
 port notesPlaying =
+  notes
+
+port notesPressed : Signal (List String)
+port notesPressed =
   model
 
-port keysPressed : Signal (List String)
-port keysPressed =
-  Signal.map keysAsNotes (Signal.map Set.toList Keyboard.keysDown)
-
-keysAsNotes : List Int -> List String
-keysAsNotes charCodes =
-  List.map toString charCodes
+-- MAIN
 
 main : Signal Html
 main =

@@ -5,6 +5,6 @@ elm.ports.notesPlaying.subscribe(function(data) {
   playNotes(data);
 });
 
-elm.ports.keysPressed.subscribe(function(data) {
+elm.ports.notesPressed.subscribe(function(data) {
   console.log(data);
 });
