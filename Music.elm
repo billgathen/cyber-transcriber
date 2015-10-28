@@ -20,8 +20,17 @@ silence = [ ]
 
 keysAsNotes : List Int -> List String
 keysAsNotes keys =
-  -- not unique (yet)
-  List.concatMap keyAsNote keys
+  unique (List.concatMap keyAsNote keys)
+
+unique : List String -> List String
+unique items =
+  List.reverse (List.foldl addUnique [] items)
+
+addUnique : String -> List String -> List String
+addUnique item uniq =
+  if List.member item uniq
+     then uniq
+     else item :: uniq
 
 keyAsNote : Int -> List String
 keyAsNote key =
