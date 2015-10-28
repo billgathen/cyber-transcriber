@@ -1,4 +1,6 @@
-var gainOn = 0.3;
+var bassGain = 0.9;
+var bassCutoff = 261.63; // C4
+var normalGain = 0.3;
 var gainOff = 0.0;
 var waveType = 'sine';
 var ctx = new AudioContext();
@@ -46,7 +48,14 @@ function silenceAll() {
 }
 
 function playNote(note) {
-  return setOscillator(newOscillator(ctx), { type: waveType, freq: frequencies[note], gain: gainOn });
+  var freq = frequencies[note];
+  var gain = normalGain;
+  // Boost low-end
+  if (freq < bassCutoff) { gain = bassGain; }
+
+  return setOscillator(
+    newOscillator(ctx),
+    { type: waveType, freq: freq, gain: gain });
 };
 
 // http://www.phy.mtu.edu/~suits/notefreqs.html
