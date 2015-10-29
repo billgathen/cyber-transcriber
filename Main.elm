@@ -41,7 +41,7 @@ update action model =
     NoOp
       -> model
     Play
-      -> Music.aMajorChord
+      -> [ "A4", "C#5", "E5" ]
     Thump note
       -> [ note ]
     Silence
