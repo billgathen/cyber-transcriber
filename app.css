@@ -5,7 +5,7 @@
   padding: 8px 0 0 0;
 }
 
-.light {
+.key {
   display: inline-block;
   border: 1px solid #555;
   background-color: lightblue;
@@ -14,6 +14,6 @@
   border-radius: 5px;
 }
 
-.pressed {
+.playing {
   background-color: orange;
 }

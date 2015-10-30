@@ -5,6 +5,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Keyboard
 import Set
+import String
 import Music
 
 -- MODEL
@@ -18,20 +19,28 @@ notes =
 -- VIEW
 
 view : Notes -> Html
-view model =
+view notesPlaying =
   div [ class "view" ]
   [
-    noteList "bass" Music.bassNotes,
-    noteList "chord" Music.chordRoots
+    noteList notesPlaying "bass" Music.bassNotes,
+    noteList notesPlaying "chord" Music.chordRoots
     ]
 
-noteList : String -> List String -> Html
-noteList noteType notes =
-  div [ class "container" ] (List.map (asNoteElement noteType) notes)
+noteList : Notes -> String -> List String -> Html
+noteList notesPlaying noteType notes =
+  let
+      noteMapper = asNoteElement notesPlaying noteType
+  in
+     div [ class "container" ] (List.map noteMapper notes)
 
-asNoteElement : String -> String -> Html
-asNoteElement noteType note =
-  span [ class (noteType ++ " light") ] [ text note ]
+asNoteElement : Notes -> String -> String -> Html
+asNoteElement notesPlaying noteType note =
+  let
+      noteIsPlaying = List.member note notesPlaying
+      playingClass = if noteIsPlaying then "playing" else ""
+      classes = String.join " " [ noteType, "key", playingClass ]
+  in
+     span [ class classes ] [ text note ]
 
 -- PORTS
 
@@ -39,8 +48,8 @@ port notesPlaying : Signal Notes
 port notesPlaying =
   notes
 
-port notesPressed : Signal (List String)
-port notesPressed =
+port console : Signal Notes
+port console =
   notes
 
 -- MAIN
