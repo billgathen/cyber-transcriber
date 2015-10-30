@@ -30,14 +30,17 @@ buildIntervals keys =
   let
       shiftKey  = 16
       ctrlKey   = 17
+      altKey    = 18
       minor     = List.member shiftKey keys
       seventh   = List.member ctrlKey keys
-      chordType = [ minor, seventh ]
+      power     = List.member altKey keys
+      chordType = [ minor, seventh, power ]
   in
      case chordType of
-       [ True,  True  ] -> [ 0, 3, 7, 10 ] -- minor 7th
-       [ False, True  ] -> [ 0, 4, 7, 10 ] -- dom 7th
-       [ True,  False ] -> [ 0, 3, 7     ] -- minor
+       [ True,  True,  False ] -> [ 0, 3, 7, 10 ] -- minor 7th
+       [ False, True,  False ] -> [ 0, 4, 7, 10 ] -- dom 7th
+       [ True,  False, False ] -> [ 0, 3, 7     ] -- minor
+       [ False, False, True  ] -> [ 0, 7, 12    ] -- power chord
        _                -> [ 0, 4, 7     ] -- major
 
 keyAsNote : List Int -> Int -> List String
