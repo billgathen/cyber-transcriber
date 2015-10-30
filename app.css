@@ -1,12 +1,16 @@
-.container {
-  margin-top: 30px;
+.view {
 }
 
-.bass-note {
-  border: 1px solid gray;
-  background-color: gray;
-  padding: 1em;
-  margin: 5px;
+.container {
+  padding: 8px 0 0 0;
+}
+
+.light {
+  display: inline-block;
+  border: 1px solid #555;
+  background-color: lightblue;
+  padding: 10px;
+  margin-right: 10px;
   border-radius: 5px;
 }
 

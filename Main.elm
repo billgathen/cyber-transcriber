@@ -19,18 +19,19 @@ notes =
 
 view : Notes -> Html
 view model =
-  div [ ]
+  div [ class "view" ]
   [
-    noteList Music.bassNotes
+    noteList "bass" Music.bassNotes,
+    noteList "chord" Music.chordRoots
     ]
 
-noteList : List String -> Html
-noteList notes =
-  div [ ] (List.map asNoteElement notes)
+noteList : String -> List String -> Html
+noteList noteType notes =
+  div [ class "container" ] (List.map (asNoteElement noteType) notes)
 
-asNoteElement : String -> Html
-asNoteElement note =
-  span [ class "bass-note" ] [ text note ]
+asNoteElement : String -> String -> Html
+asNoteElement noteType note =
+  span [ class (noteType ++ " light") ] [ text note ]
 
 -- PORTS
 
