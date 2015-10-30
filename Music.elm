@@ -57,8 +57,10 @@ keyAsNote intervals key =
     56  -> [ "G#3" ]
     57  -> [ "A3"  ]
     48  -> [ "A#3" ]
-    189 -> [ "B3"  ]
-    187 -> [ "C4"  ]
+    189 -> [ "B3"  ] -- Chrome
+    187 -> [ "C4"  ] -- Chrome
+    173 -> [ "B3"  ] -- Firefox
+    61  -> [ "C4"  ] -- Firefox
     81  -> chord (Just "C4") intervals
     87  -> chord (Just "C#4") intervals
     69  -> chord (Just "D4") intervals

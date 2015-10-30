@@ -5,6 +5,14 @@ elm.ports.notesPlaying.subscribe(function(data) {
   playNotes(data);
 });
 
-elm.ports.console.subscribe(function(data) {
-  console.log(data);
+elm.ports.notesConsole.subscribe(function(data) {
+  output(data);
 });
+
+elm.ports.keysDownConsole.subscribe(function(data) {
+  output(data);
+});
+
+function output(data) {
+  if (data.length > 0) { console.log(data); }
+}

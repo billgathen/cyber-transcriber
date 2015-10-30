@@ -57,9 +57,13 @@ port notesPlaying : Signal Notes
 port notesPlaying =
   notes
 
-port console : Signal Notes
-port console =
+port notesConsole : Signal Notes
+port notesConsole =
   notes
+
+port keysDownConsole : Signal CharCodes
+port keysDownConsole =
+  keysDown
 
 -- MAIN
 
