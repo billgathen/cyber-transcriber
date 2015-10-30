@@ -1,4 +1,4 @@
-var bassGain = 0.9;
+var bassGain = 1.5;
 var bassCutoff = 261.63; // C4
 var normalGain = 0.3;
 var gainOff = 0.0;

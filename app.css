@@ -1,0 +1,15 @@
+.container {
+  margin-top: 30px;
+}
+
+.bass-note {
+  border: 1px solid gray;
+  background-color: gray;
+  padding: 1em;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.pressed {
+  background-color: orange;
+}
