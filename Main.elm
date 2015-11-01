@@ -31,7 +31,7 @@ chordsPlaying keys =
       roots = Music.chordsPlaying keys
       sortedRoots = List.sort roots
       rootsString = String.join ", " sortedRoots
-      flavor = Music.chordFlavor keys
+      flavor = if (List.length roots) > 0 then Music.chordFlavor keys else ""
   in
      div [ class "chords-playing" ]
      [
