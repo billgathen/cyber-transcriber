@@ -10,8 +10,7 @@ silence = [ ]
 keysAsNotes : List Int -> List String
 keysAsNotes keys =
   let
-      chordIntervals = buildIntervals keys
-      keyAsNoteOrChord = keyAsNote chordIntervals
+      keyAsNoteOrChord = keyAsNote (chordIntervals keys)
   in
     unique (List.concatMap keyAsNoteOrChord keys)
 
@@ -25,8 +24,26 @@ addUnique item uniq =
      then uniq
      else item :: uniq
 
-buildIntervals : List Int -> List Int
-buildIntervals keys =
+chordIntervals : List Int -> List Int
+chordIntervals keys =
+  case (chordMap keys) of
+    [ True,  True,  False ] -> [ 0, 3, 7, 10 ] -- minor 7th
+    [ False, True,  False ] -> [ 0, 4, 7, 10 ] -- dom 7th
+    [ True,  False, False ] -> [ 0, 3, 7     ] -- minor
+    [ False, False, True  ] -> [ 0, 7, 12    ] -- power chord
+    _                       -> [ 0, 4, 7     ] -- major
+
+chordFlavor : List Int -> String
+chordFlavor keys =
+  case (chordMap keys) of
+    [ True,  True,  False ] -> "minor 7th"
+    [ False, True,  False ] -> "dominant 7th"
+    [ True,  False, False ] -> "minor"
+    [ False, False, True  ] -> "power chord"
+    _                       -> "major"
+
+chordMap : List Int -> List Bool
+chordMap keys =
   let
       shiftKey  = 16
       ctrlKey   = 17
@@ -34,14 +51,8 @@ buildIntervals keys =
       minor     = List.member shiftKey keys
       seventh   = List.member ctrlKey keys
       power     = List.member altKey keys
-      chordType = [ minor, seventh, power ]
   in
-     case chordType of
-       [ True,  True,  False ] -> [ 0, 3, 7, 10 ] -- minor 7th
-       [ False, True,  False ] -> [ 0, 4, 7, 10 ] -- dom 7th
-       [ True,  False, False ] -> [ 0, 3, 7     ] -- minor
-       [ False, False, True  ] -> [ 0, 7, 12    ] -- power chord
-       _                -> [ 0, 4, 7     ] -- major
+      [ minor, seventh, power ]
 
 keyAsNote : List Int -> Int -> List String
 keyAsNote intervals key =

@@ -21,17 +21,22 @@ view pressedKeys =
   div [ class "view" ]
   [
     noteList pressedKeys Constants.bassNoteKeys,
-    noteList pressedKeys Constants.chromaticChordKeys
+    noteList pressedKeys Constants.chromaticChordKeys,
+    chordFlavor pressedKeys
     ]
 
-noteList : List Int -> List Int -> Html
+chordFlavor : CharCodes -> Html
+chordFlavor pressedKeys =
+  div [ class "chord-flavor" ] [ text (Music.chordFlavor pressedKeys) ]
+
+noteList : CharCodes -> List Int -> Html
 noteList pressedKeys keyList =
   let
       noteMapper = asNoteElement pressedKeys
   in
      div [ class "container" ] (List.map noteMapper keyList)
 
-asNoteElement : List Int -> Int -> Html
+asNoteElement : CharCodes -> Int -> Html
 asNoteElement pressedKeys key =
   let
       keyIsPressed = List.member key pressedKeys
