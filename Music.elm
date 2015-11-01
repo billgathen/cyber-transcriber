@@ -5,8 +5,6 @@ import Chords exposing (chord)
 bassNotes  = [ "C3", "C#3", "D3", "D#3", "E3", "F3", "F#3", "G3", "G#3", "A3", "A#3", "B3", "C4" ]
 chordRoots = [ "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", "C5" ]
 
-silence = [ ]
-
 allNotes : List Int -> List String
 allNotes keys =
   let
@@ -15,6 +13,13 @@ allNotes keys =
       chordNotes = List.concatMap (keyAsChord intervals) keys
   in
      unique (List.concat [ keyNotes, chordNotes ])
+
+chordsPlaying : List Int -> List String
+chordsPlaying keys =
+  let
+      notes = List.map keyAsNote keys
+  in
+     List.filter (\note -> List.member note chordRoots) notes
 
 unique : List String -> List String
 unique items =
@@ -105,4 +110,4 @@ keyAsChord intervals key =
     219 -> chord (Just "A#4") intervals
     221 -> chord (Just "B4") intervals
     220 -> chord (Just "C5") intervals
-    _   -> silence
+    _   -> [ ] -- silence

@@ -22,12 +22,21 @@ view pressedKeys =
   [
     noteList pressedKeys Constants.bassNoteKeys,
     noteList pressedKeys Constants.chromaticChordKeys,
-    chordFlavor pressedKeys
+    chordsPlaying pressedKeys
     ]
 
-chordFlavor : CharCodes -> Html
-chordFlavor pressedKeys =
-  div [ class "chord-flavor" ] [ text (Music.chordFlavor pressedKeys) ]
+chordsPlaying : CharCodes -> Html
+chordsPlaying keys =
+  let
+      roots = Music.chordsPlaying keys
+      sortedRoots = List.sort roots
+      rootsString = String.join ", " sortedRoots
+      flavor = Music.chordFlavor keys
+  in
+     div [ class "chords-playing" ]
+     [
+       h1 [ ] [ text (String.join " " [ rootsString, flavor ]) ]
+       ]
 
 noteList : CharCodes -> List Int -> Html
 noteList pressedKeys keyList =
