@@ -7,12 +7,14 @@ chordRoots = [ "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "
 
 silence = [ ]
 
-keysAsNotes : List Int -> List String
-keysAsNotes keys =
+allNotes : List Int -> List String
+allNotes keys =
   let
-      keyAsNoteOrChord = keyAsNote (chordIntervals keys)
+      intervals = chordIntervals keys
+      keyNotes   = List.map keyAsNote keys
+      chordNotes = List.concatMap (keyAsChord intervals) keys
   in
-    unique (List.concatMap keyAsNoteOrChord keys)
+     unique (List.concat [ keyNotes, chordNotes ])
 
 unique : List String -> List String
 unique items =
@@ -54,24 +56,42 @@ chordMap keys =
   in
       [ minor, seventh, power ]
 
-keyAsNote : List Int -> Int -> List String
-keyAsNote intervals key =
+keyAsNote : Int -> String
+keyAsNote key =
   case key of
-    192 -> [ "C3"  ]
-    49  -> [ "C#3" ]
-    50  -> [ "D3"  ]
-    51  -> [ "D#3" ]
-    52  -> [ "E3"  ]
-    53  -> [ "F3"  ]
-    54  -> [ "F#3" ]
-    55  -> [ "G3"  ]
-    56  -> [ "G#3" ]
-    57  -> [ "A3"  ]
-    48  -> [ "A#3" ]
-    189 -> [ "B3"  ] -- Chrome
-    187 -> [ "C4"  ] -- Chrome
-    173 -> [ "B3"  ] -- Firefox
-    61  -> [ "C4"  ] -- Firefox
+    192 -> "C3" 
+    49  -> "C#3"
+    50  -> "D3" 
+    51  -> "D#3"
+    52  -> "E3" 
+    53  -> "F3" 
+    54  -> "F#3"
+    55  -> "G3" 
+    56  -> "G#3"
+    57  -> "A3" 
+    48  -> "A#3"
+    189 -> "B3"  -- Chrome
+    187 -> "C4"  -- Chrome
+    173 -> "B3"  -- Firefox
+    61  -> "C4"  -- Firefox
+    81  -> "C4"
+    87  -> "C#4"
+    69  -> "D4"
+    82  -> "D#4"
+    84  -> "E4"
+    89  -> "F4"
+    85  -> "F#4"
+    73  -> "G4"
+    79  -> "G#4"
+    80  -> "A4"
+    219 -> "A#4"
+    221 -> "B4"
+    220 -> "C5"
+    _   -> ""
+
+keyAsChord : List Int -> Int -> List String
+keyAsChord intervals key =
+  case key of
     81  -> chord (Just "C4") intervals
     87  -> chord (Just "C#4") intervals
     69  -> chord (Just "D4") intervals

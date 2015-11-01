@@ -54,7 +54,7 @@ keysDown =
 
 notes : Signal Notes
 notes =
-  Signal.map Music.keysAsNotes keysDown
+  Signal.map Music.allNotes keysDown
 
 -- PORTS
 
